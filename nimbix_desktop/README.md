@@ -1,5 +1,6 @@
-This is the Nimbix Desktop.  It provides a XFCE 4 based desktop with default
-configuration files.
+This is the Nimbix Desktop. It provides a XFCE 4 based desktop with default
+configuration files when using noVNC. If Xpra is selected, XFCE 4 is not
+necessary.
 
 To get started, simply execute install.sh to install the nimbix_desktop script,
 XFCE packages, and default XFCE config files.  The default config provides a

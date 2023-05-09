@@ -1,0 +1,23 @@
+#!/bin/bash
+# tag 1.0
+
+app_mode=
+[ -n "$1" ] && app_mode=y
+
+nimbix_desktop="/etc/JARVICE/nimbix_desktop"
+sh -c "echo app_mode=$app_mode >>$nimbix_desktop"
+
+while [ 1 ]; do
+    /usr/local/JARVICE/tools/bin/xprastart.sh
+    ret=$?
+    if [ -n "$app_mode" ]; then
+        rm -f $app_menu
+        exit $ret
+    else
+        [ $ret -ne 0 ] && exit 0
+    fi
+    sleep 1
+    xpra stop :1
+    sleep 1
+done
+

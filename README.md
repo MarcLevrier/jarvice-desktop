@@ -3,10 +3,21 @@
 ![Portal ScreenShot](portal-screenshot.png)
 
 Setup an Xfce4 desktop into application image to launch it as an 
-interactive desktop into Jarvice portal.
+interactive desktop into Jarvice portal. Xfce4 is required when
+using noVNC remote visualization tachnology.
 
-Scripts will setup common packages and configuration files for Nimbix base images. This will
-retrofit existing Docker images for better execution on JARVICE.
+In this Jarvice-Desktop fork, we added the support of Xpra remote
+visualization in both HTML5 (desktop) or seamless modes. In seamless
+mode, the application's windows are melted in the client host's
+Window manager with client-side decoration.
+
+Remarks:
+1. Xpra does NOT require Xfce4
+2. Xpra is only supported on RHELr-like distributions at the moment
+
+Scripts will setup common packages and configuration files for Nimbix
+base images. This will retrofit existing Docker images for better
+ execution on JARVICE.
 
 If you have an image derived from a non-Nimbix base, and you want to improve
 its execution on JARVICE, there is now a simple way to do this in your

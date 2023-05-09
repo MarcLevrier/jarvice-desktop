@@ -20,6 +20,9 @@ while [ $# -gt 0 ]; do
   --reduce-image-size)
     export RIS=true
     ;;
+  --xpra)
+    export XPRA=true
+    ;;
   *)
     break
     ;;
@@ -30,6 +33,11 @@ done
 if [ "$VERBOSE" = true ]; then
   echo -e "\e[1;33mINFO : Enabling verbosity\e[0m"
   sleep 1
+  set -x
+fi
+
+if [ "$XPRA" = true ]; then
+  echo -e "\e[1;33mINFO : Enabling Xpra - Disabling noVNC\e[0m"
   set -x
 fi
 
@@ -100,6 +108,10 @@ sleep 1
     fi
 
   elif [[ "$ID" == *"ubuntu"* ]]; then # Ubuntu based system
+    if [ "$XPRA" = true ]; then
+      echo -e "\eXpra not supported on Ubuntu at the moment\e"
+      exit 1
+    fi
     if [ "$RIS" = true ]; then
       export RIS="--no-install-recommends"
     fi
@@ -201,8 +213,12 @@ function setup_nimbix_desktop() {
   elif [[ "$ID" == *"ubuntu"* ]]; then # Ubuntu based system
     files="install-ubuntu-desktop.sh"
   fi
-  files+=" prep-tiger.sh install-tiger.sh help-tiger.html postinstall-desktop.sh"
-  files+=" nimbix_desktop url.txt xfce4-session-logout share skel.config mimeapps.list helpers.rc"
+  files+=" url.txt share skel.config mimeapps.list helpers.rc postinstall-desktop.sh"
+  if [ "$XPRA" =true ]; then
+    files+=" nimbix_desktop.xpra"
+  else
+    files+=" nimbix_desktop prep-tiger.sh install-tiger.sh help-tiger.html xfce4-session-logout"
+  fi
 
   # Pull the files from the install bolus
   for i in $files; do
@@ -217,24 +233,35 @@ function setup_nimbix_desktop() {
     /usr/local/lib/nimbix_desktop/install-ubuntu-desktop.sh
   fi
 
-  if [[ $ARCH == x86_64 ]]; then
-    /usr/local/lib/nimbix_desktop/prep-tiger.sh
-    cp /usr/local/lib/nimbix_desktop/help-tiger.html /etc/NAE/help.html
-    /usr/local/lib/nimbix_desktop/install-tiger.sh
+  if [ "$XPRA" = false ]; then
+    if [[ $ARCH == x86_64 ]]; then
+      /usr/local/lib/nimbix_desktop/prep-tiger.sh
+      cp /usr/local/lib/nimbix_desktop/help-tiger.html /etc/NAE/help.html
+      /usr/local/lib/nimbix_desktop/install-tiger.sh
+    fi
   fi
 
-  # clean up older copies, make a link for all apps to find nimbix_desktop
+  # clean up older copies
   rm -f /usr/lib/JARVICE/tools/nimbix_desktop
+
+  # Make a link for all apps to find nimbix_desktop
   ln -sf /usr/local/lib/nimbix_desktop/ /usr/lib/JARVICE/tools/nimbix_desktop
 
-  # recreate nimbix user home to get the right skeleton files
-  # /bin/rm -rf /home/nimbix
-  # /sbin/mkhomedir_helper nimbix
-  # ^^^ not compatible with v2
+  if [ "$XPRA" = true ]; then
+    pushd /usr/lib/JARVICE/tools/nimbix_desktop
+    rm -f nimbix_desktop
+    mv nimbix_desktop.xpra nimbix_desktop
+    popd
+  else
+    # recreate nimbix user home to get the right skeleton files
+    # /bin/rm -rf /home/nimbix
+    # /sbin/mkhomedir_helper nimbix
+    # ^^^ not compatible with v2
 
-  # Add a marker file for using a local, updated noVNC install
-  echo /usr/local/JARVICE/tools/noVNC | tee /etc/.novnc-stable
-  chmod 777 /etc/.novnc-stable
+    # Add a marker file for using a local, updated noVNC install
+    echo /usr/local/JARVICE/tools/noVNC | tee /etc/.novnc-stable
+    chmod 777 /etc/.novnc-stable
+  fi
 }
 
 function cleanup() {
@@ -289,7 +316,9 @@ function tune_nimbix_desktop() {
 setup_base_os
 setup_jarvice_emulation
 setup_nimbix_desktop
-tune_nimbix_desktop
+if [ "$XPRA" = false ]; then
+  tune_nimbix_desktop
+fi
 cleanup
 
 exit 0

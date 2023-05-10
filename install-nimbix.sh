@@ -164,8 +164,11 @@ function setup_jarvice_emulation() {
   sleep 1
 
   cd /tmp
-  curl https://codeload.github.com/nimbix/jarvice-desktop/zip/$BRANCH \
-    >/tmp/nimbix.zip
+  if [ "$XPRA" =true ]; then
+    curl https://codeload.github.com/MarcLevrier/jarvice-desktop/zip/$BRANCH >/tmp/nimbix.zip
+  else
+    curl https://codeload.github.com/nimbix/jarvice-desktop/zip/$BRANCH >/tmp/nimbix.zip
+  fi
   unzip nimbix.zip
   rm -f nimbix.zip
   # /tmp/jarvice-desktop-$BRANCH/setup-nimbix.sh    # not compatible with v2

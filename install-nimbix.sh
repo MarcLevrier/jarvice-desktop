@@ -108,7 +108,7 @@ sleep 1
     fi
 
   elif [[ "$ID" == *"ubuntu"* ]]; then # Ubuntu based system
-    if [ "$XPRA" = true ]; then
+    if [ "$XPRA" == true ]; then
       echo -e "\eXpra not supported on Ubuntu at the moment\e"
       exit 1
     fi
@@ -164,7 +164,7 @@ function setup_jarvice_emulation() {
   sleep 1
 
   cd /tmp
-  if [ "$XPRA" =true ]; then
+  if [ "$XPRA" == true ]; then
     curl https://codeload.github.com/MarcLevrier/jarvice-desktop/zip/$BRANCH >/tmp/nimbix.zip
   else
     curl https://codeload.github.com/nimbix/jarvice-desktop/zip/$BRANCH >/tmp/nimbix.zip
@@ -217,7 +217,7 @@ function setup_nimbix_desktop() {
     files="install-ubuntu-desktop.sh"
   fi
   files+=" url.txt share skel.config mimeapps.list helpers.rc postinstall-desktop.sh"
-  if [ "$XPRA" =true ]; then
+  if [ "$XPRA" == true ]; then
     files+=" nimbix_desktop.xpra"
   else
     files+=" nimbix_desktop prep-tiger.sh install-tiger.sh help-tiger.html xfce4-session-logout"
@@ -236,7 +236,7 @@ function setup_nimbix_desktop() {
     /usr/local/lib/nimbix_desktop/install-ubuntu-desktop.sh
   fi
 
-  if [ "$XPRA" = false ]; then
+  if [ "$XPRA" == false ]; then
     if [[ $ARCH == x86_64 ]]; then
       /usr/local/lib/nimbix_desktop/prep-tiger.sh
       cp /usr/local/lib/nimbix_desktop/help-tiger.html /etc/NAE/help.html
@@ -250,7 +250,7 @@ function setup_nimbix_desktop() {
   # Make a link for all apps to find nimbix_desktop
   ln -sf /usr/local/lib/nimbix_desktop/ /usr/lib/JARVICE/tools/nimbix_desktop
 
-  if [ "$XPRA" = true ]; then
+  if [ "$XPRA" == true ]; then
     pushd /usr/lib/JARVICE/tools/nimbix_desktop
     rm -f nimbix_desktop
     mv nimbix_desktop.xpra nimbix_desktop
@@ -319,7 +319,7 @@ function tune_nimbix_desktop() {
 setup_base_os
 setup_jarvice_emulation
 setup_nimbix_desktop
-if [ "$XPRA" = false ]; then
+if [ "$XPRA" == false ]; then
   tune_nimbix_desktop
 fi
 cleanup

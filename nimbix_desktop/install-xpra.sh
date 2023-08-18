@@ -3,9 +3,10 @@
 VERSION=1.10.1
 ARCH=$(arch)
 
+echo "From $0 - $(date)" > /tmp/install-xpra.log 
+
 if [ "$ARCH" != "x86_64" ]; then
     #build_and_install_xpra
-    touch /tmp/xpra 
     if [[ -f /etc/redhat-release ]]; then
         dnf -y install xpra
     else

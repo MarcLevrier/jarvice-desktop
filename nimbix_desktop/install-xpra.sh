@@ -5,6 +5,7 @@ ARCH=$(arch)
 
 if [ "$ARCH" != "x86_64" ]; then
     #build_and_install_xpra
+    touch /tmp/xpra 
     if [[ -f /etc/redhat-release ]]; then
         dnf -y install xpra
     else

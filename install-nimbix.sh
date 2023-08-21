@@ -236,7 +236,11 @@ function setup_nimbix_desktop() {
     /usr/local/lib/nimbix_desktop/install-ubuntu-desktop.sh
   fi
 
-  if [ "$XPRA" = false ]; then
+  if [ "$XPRA" = true ]; then
+    if [[ $ARCH == x86_64 ]]; then
+      /usr/local/lib/nimbix_desktop/install-xpra.sh
+    fi
+  else
     if [[ $ARCH == x86_64 ]]; then
       /usr/local/lib/nimbix_desktop/prep-tiger.sh
       cp /usr/local/lib/nimbix_desktop/help-tiger.html /etc/NAE/help.html

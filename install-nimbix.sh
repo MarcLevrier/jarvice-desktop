@@ -321,7 +321,7 @@ setup_jarvice_emulation
 setup_nimbix_desktop
 if [ "$XPRA" = false ]; then
   tune_nimbix_desktop
+  cleanup
 fi
-cleanup
 
 exit 0

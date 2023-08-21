@@ -5,7 +5,7 @@ ARCH=$(arch)
 
 echo "From $0 - $(date)" > /tmp/install-xpra.log 
 
-if [ "$ARCH" != "x86_64" ]; then
+# if [ "$ARCH" != "x86_64" ]; then
     #build_and_install_xpra
     if [[ -f /etc/redhat-release ]]; then
         dnf -y install xpra
@@ -22,6 +22,6 @@ if [ "$ARCH" != "x86_64" ]; then
 #      ln -sf /usr/libexec/vncserver /usr/bin/vncserver
 #    fi
 
-fi
+# fi
 
 # cp /usr/local/lib/nimbix_desktop/help-tiger.html /etc/NAE/help.html

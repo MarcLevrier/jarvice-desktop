@@ -237,9 +237,7 @@ function setup_nimbix_desktop() {
   fi
 
   if [ "$XPRA" = true ]; then
-    if [[ $ARCH == x86_64 ]]; then
-      /usr/local/lib/nimbix_desktop/install-xpra.sh
-    fi
+    /usr/local/lib/nimbix_desktop/install-xpra.sh
   else
     if [[ $ARCH == x86_64 ]]; then
       /usr/local/lib/nimbix_desktop/prep-tiger.sh

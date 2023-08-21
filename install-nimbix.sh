@@ -218,7 +218,7 @@ function setup_nimbix_desktop() {
   fi
   files+=" url.txt share skel.config mimeapps.list helpers.rc postinstall-desktop.sh"
   if [ "$XPRA" = true ]; then
-    files+=" nimbix_desktop.xpra"
+    files+=" nimbix_desktop.xpra install-xpra.sh"
   else
     files+=" nimbix_desktop prep-tiger.sh install-tiger.sh help-tiger.html xfce4-session-logout"
   fi

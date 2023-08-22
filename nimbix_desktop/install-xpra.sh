@@ -8,8 +8,10 @@ echo "From $0 - $(date)" > /tmp/install-xpra.log
 # if [ "$ARCH" != "x86_64" ]; then
     #build_and_install_xpra
     if [[ -f /etc/redhat-release ]]; then
-        dnf -y install xpra
+        dnf -y install epel-release
+        dnf -y --disablerepo=epel-release,kubernetes install xpra xcb-util-keysyms
     else
+        # Platform not supported to be honest :)
         apt-get -y update
         apt-get -y install xpra
     fi

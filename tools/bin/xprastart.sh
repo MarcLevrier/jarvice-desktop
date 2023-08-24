@@ -58,7 +58,7 @@ export VGL_READBACK=sync
 
 Xpra start --bind-tcp=0.0.0.0:5903 ${DISPLAY}                 \ # TODO: check if 5903 is OK (5901|2 seem to be for *VNC)
     --ssl-cert=/etc/JARVICE/cert.pem --bind-tcp=127.0.0.1:443 \ # Secured https connection (no self-signed cert)
-    --daemon=no -dbus-control=no -dbus-launch=no
+    --daemon=no -dbus-control=no -dbus-launch=no > /tmp/xpra.log 2>&1
     # --exit-with-children --start-child='${ChildAppBinary}'    # TODO: Get application binary (for seamless?) 
 
 # ------------------------------------------

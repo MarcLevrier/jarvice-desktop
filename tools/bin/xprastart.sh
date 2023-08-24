@@ -54,11 +54,12 @@ export VGL_READBACK=sync
 # Client-side usage:
 # - Attach Xpra client CLI using 'xpra attach ssl://public.ip:5903/'
 # - Attach from a web browser supporting HTML5 using 'https://public.ip:443/'
+# TODO: check if 5903 is OK (5901|2 seem to be for *VNC)
 # ---------------------------------------------------------------------------
 
-xpra start --bind-tcp=0.0.0.0:5903 ${DISPLAY}                 \ # TODO: check if 5903 is OK (5901|2 seem to be for *VNC)
-    # --ssl-cert=/etc/JARVICE/cert.pem --bind-tcp=127.0.0.1:443 \ # Secured https connection (no self-signed cert)
+xpra start --bind-tcp=0.0.0.0:5903 ${DISPLAY} \ 
     --daemon=no -dbus-control=no -dbus-launch=no > /tmp/xpra.log 2>&1
+    # --ssl-cert=/etc/JARVICE/cert.pem --bind-tcp=127.0.0.1:443 \ # Secured https connection (no self-signed cert)
     # --exit-with-children --start-child='${ChildAppBinary}'    # TODO: Get application binary (for seamless?) 
 
 # ------------------------------------------

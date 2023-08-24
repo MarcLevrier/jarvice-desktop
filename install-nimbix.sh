@@ -209,6 +209,7 @@ function setup_nimbix_desktop() {
   mkdir -p /usr/local/lib/nimbix_desktop
 
   # Copy in the VNC server installers and the XFCE files
+  # or the XPRA related files if XPRA was selected
   source /etc/os-release
 
   if [[ "$ID_LIKE" == *"rhel"* ]]; then # EL based system
@@ -217,10 +218,9 @@ function setup_nimbix_desktop() {
     files="install-ubuntu-desktop.sh"
   fi
   files+=" url.txt share skel.config mimeapps.list helpers.rc postinstall-desktop.sh"
+  files+=" nimbix_desktop prep-tiger.sh install-tiger.sh help-tiger.html xfce4-session-logout"
   if [ "$XPRA" = true ]; then
     files+=" nimbix_desktop.xpra install-xpra.sh"
-  else
-    files+=" nimbix_desktop prep-tiger.sh install-tiger.sh help-tiger.html xfce4-session-logout"
   fi
 
   # Pull the files from the install bolus
@@ -256,6 +256,7 @@ function setup_nimbix_desktop() {
     pushd /usr/lib/JARVICE/tools/nimbix_desktop
     rm -f nimbix_desktop
     mv nimbix_desktop.xpra nimbix_desktop
+    chmod u+x nimbix_desktop
     popd
   else
     # recreate nimbix user home to get the right skeleton files

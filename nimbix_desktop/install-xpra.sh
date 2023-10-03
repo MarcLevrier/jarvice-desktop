@@ -9,7 +9,8 @@ echo "From $0 - $(date)" > /tmp/install-xpra.log
     #build_and_install_xpra
     if [[ -f /etc/redhat-release ]]; then
         dnf -y install epel-release
-        dnf -y --disablerepo=epel-release,kubernetes install VirtualGL xpra xcb-util-keysyms
+        # dnf -y --disablerepo=epel-release,kubernetes install VirtualGL xpra xcb-util-keysyms
+        dnf -y install xpra xcb-util-keysyms
     else
         # Platform not supported to be honest :)
         apt-get -y update

@@ -63,7 +63,7 @@ export VGL_READBACK=sync
     # --exit-with-children --start-child='${ChildAppBinary}'    # TODO: Get application binary (for seamless?) 
 
 # DHP: test using --ssl-cert
-xpra start --bind-tcp=0.0.0.0:5903 ${DISPLAY} --daemon=no -dbus-control=no -dbus-launch=no --ssl-cert=/etc/JARVICE/cert.pem > /tmp/xpra.log 2>&1
+xpra start --bind-tcp=0.0.0.0:5903 ${DISPLAY} --daemon=no -dbus-control=no -dbus-launch=no --ssl-cert=/etc/pki/ca-trust/source/anchors/domain.crt > /tmp/xpra.log 2>&1
 
 # ------------------------------------------
 # Create links to the vault mounted at /data
